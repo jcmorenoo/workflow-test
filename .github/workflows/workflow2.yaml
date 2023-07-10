@@ -38,7 +38,7 @@ jobs:
 
       - name: Get tag_number and print
         id: get_tag
-        run: echo "TAG_NUMBER=$(cat ./tag_number)"
+        run: echo "TAG_NUMBER=$(cat ./tag_number)" >> $GITHUB_STATE
 
       - name: Use the previous step tag_number
         run: echo ${{ steps.get_tag.outputs.TAG_NUMBER }}
