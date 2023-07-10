@@ -1,0 +1,28 @@
+name: Bump version
+on:
+  push:
+    branches:
+      - main
+jobs:
+  version:
+    name: tag new version
+    runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.version.outputs.new_tag }}
+    steps:
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🏷 Bump version & Create tag version
+        id: version
+        uses: anothrNick/github-tag-action@1.66.0
+        env:
+          DRY_RUN: false
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_BRANCHES: main
+          DEFAULT_BUMP: patch
+          WITH_V: false
+
+      - name: Echo tag number
+        run: |
+          echo $steps.version.outputs.new_tag
