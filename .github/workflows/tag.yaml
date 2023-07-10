@@ -25,4 +25,15 @@ jobs:
 
       - name: Echo tag number
         run: |
-          echo ${{ steps.version.outputs.new_tag }}
+          echo Tag: ${{ steps.version.outputs.new_tag }}
+
+      - name: Save Tag
+        env:
+          TAG: ${{ steps.version.outputs.new_tag }}
+        run: |
+          mkdir -p ./tag
+          echo $TAG > ./tag/tag_number
+      - uses: actions/upload-artifact@v3
+        with:
+          name: tag_number
+          path: tag/
